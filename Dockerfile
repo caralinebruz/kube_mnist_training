@@ -1,21 +1,15 @@
-FROM python:3.10-slim-bullseye
-
-RUN apt-get update &&
-  apt-get -y upgrade
-
-ENV PORT 8001
-EXPOSE $PORT
+FROM --platform=linux/amd64 python:3.10-slim-bullseye
 
 WORKDIR /app
 
 ADD mnist.py /app/
 ADD requirements.txt /app/
 
-RUN pip3 install -r requirements.txt
+RUN mkdir /model
+VOLUME /model
+ENV MODEL_DIR /model
 
-RUN mkdir /app/data
-VOLUME /app/data
-VOLUME /app
+RUN pip3 install -r requirements.txt
 
 
 CMD [ "python", "mnist.py", "--save-model", "--no-mps", "--epochs", "1"]

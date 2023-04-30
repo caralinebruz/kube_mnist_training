@@ -143,10 +143,10 @@ def main():
 
     if args.save_model:
         #to get the current working directory
-        directory = os.getcwd()
-        print("curr dir: ", directory)
         filename = "mnist_cnn.pt"
-        file_save_fullname = directory + "/data/" + filename
+        model_dir = os.getenv('MODEL_DIR')
+
+        file_save_fullname = model_dir + "/" + filename
         print("saving to path %d", file_save_fullname)
 
         torch.save(model.state_dict(), file_save_fullname)
